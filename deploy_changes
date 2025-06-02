@@ -26,6 +26,8 @@ function fn_exit_on_uncomitted_changes() {
 }
 
 function fn_deploy_changes() {
+  git checkout main
+  git push
   git checkout deployment
   git merge main
   git push
