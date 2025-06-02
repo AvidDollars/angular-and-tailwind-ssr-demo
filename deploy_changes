@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -e
+
+DEV_BRANCH=main
+
+### INTERNAL ###
+function _fn_show_current_branch() {
+    git symbolic-ref --short HEAD
+}
+
+### API ###
+function fn_exit_if_not_on_main_branch() {
+  local current_branch=$(_fn_show_current_branch)
+
+  if [[ "$current_branch" != "$DEV_BRANCH" ]]; then
+    >&2 echo "you must be on a 'main' branch to deploy the changes!"
+    exit 69
+  fi
+}
+
+function fn_exit_on_uncomitted_changes() {
+  if [[ ! -z $(git status -s) ]]; then
+    >&2 echo "commit the changes before the deployment"
+    exit 42
+  fi
+}
+
+function fn_deploy_changes() {
+  git checkout deployment
+  git merge main
+  git push
+}
+
+function main() {
+  fn_exit_if_not_on_main_branch
+  fn_exit_on_uncomitted_changes
+  fn_deploy_changes
+}
+
+### DEPLOYMENT PROCEDURE ###
+main
