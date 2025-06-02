@@ -30,6 +30,8 @@ function fn_deploy_changes() {
   git push
   git checkout deployment
   git merge main
+  git checkout deployment
+  git merge main
   git push
 }
 
