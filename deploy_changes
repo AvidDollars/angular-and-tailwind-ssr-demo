@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
-
 DEV_BRANCH=main
+DEPLOYMENT_BRANCH=deployment
 
 ### INTERNAL ###
 function _fn_show_current_branch() {
@@ -28,8 +28,8 @@ function fn_exit_on_uncomitted_changes() {
 function fn_deploy_changes() {
   git checkout main
   git push
-  git checkout deployment
-  git merge main -m "merging changes to 'deployment' branch"
+  git checkout $DEPLOYMENT_BRANCH
+  git merge main -m "merging changes to '$DEPLOYMENT_BRANCH' branch"
   git push
   git checkout main
 }
