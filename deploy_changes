@@ -31,7 +31,7 @@ function fn_deploy_changes() {
   git checkout deployment
   git merge main
   git checkout deployment
-  git merge main
+  git merge main -m "merging changes to 'deployment' branch"
   git push
   git checkout main
 }
