@@ -5,11 +5,7 @@ import { catchError, map, of } from 'rxjs';
 import { toSignal} from '@angular/core/rxjs-interop';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ItemsAvailableService {
-
+class ItemsAvailableInternal {
   #http = inject(HttpClient);
   #url = "https://swapi.py4e.com/api/vehicles";
   #vehicleCount$ = this.#http.get<ResponseRaw>(this.#url).pipe(
@@ -21,19 +17,27 @@ export class ItemsAvailableService {
     })
   );
 
-  #vehicleCount = toSignal(this.#vehicleCount$);
+  protected vehicleCount = toSignal(this.#vehicleCount$);
 
   /**
    * Constructs an array of URLs.
    * Each URL represents one item.
    * To be used for parallel fetching.
    */
-  #createUrls(vehicleCount: number): string[] {
+  protected createUrls(vehicleCount: number): string[] {
     return [...Array(vehicleCount).keys()]
       .map(id => `https://swapi.py4e.com/api/vehicles/${id}/`);
   }
+}
 
-  // API LAYER
-  urlsToFetch = computed(() => this.#createUrls(this.#vehicleCount() || -1)); // -1 -> error
+/**
+ * Represents public API.
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class ItemsAvailableService extends ItemsAvailableInternal {
+
+  urlsToFetch = computed(() => this.createUrls(this.vehicleCount() || -1)); // -1 -> error
 
 }
