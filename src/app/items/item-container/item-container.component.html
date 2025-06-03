@@ -1,18 +1,5 @@
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
+@let urls = itemsService.urlsToFetch();
 
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-<app-item />
-
+@for (url of urls; track $index) {
+  <app-item [url]=url />
+}

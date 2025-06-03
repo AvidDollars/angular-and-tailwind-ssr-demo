@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-item',
@@ -14,5 +14,5 @@ import { Component } from '@angular/core';
   }
 })
 export class ItemComponent {
-
+  url = input.required<string>();
 }

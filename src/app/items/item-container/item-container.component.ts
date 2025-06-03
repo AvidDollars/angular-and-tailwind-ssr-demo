@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ItemComponent } from "../item/item.component";
+import { ItemsAvailableService } from '../items-available.service';
 
 @Component({
   selector: 'app-item-container',
@@ -16,5 +17,7 @@ import { ItemComponent } from "../item/item.component";
   }
 })
 export class ItemContainerComponent {
+
+  itemsService = inject(ItemsAvailableService);
 
 }
