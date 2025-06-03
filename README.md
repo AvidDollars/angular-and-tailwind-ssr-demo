@@ -1,5 +1,9 @@
-# FormDemo link
-Accessible here: [https://aviddollars.github.io/form_demo/](https://aviddollars.github.io/form_demo/)
+# Link to the demo
+accessible here: [https://aviddollars.github.io/form_demo/](https://aviddollars.github.io/form_demo/)
+
+## Technologies used
+- Angular v19
+- Tailwind v4
 
 ## Develepoment and deployment process
 ```bash
