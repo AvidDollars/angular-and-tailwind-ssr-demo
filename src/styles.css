@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
-body {
-  background-color: rgb(37, 37, 37);
-  color: rgb(238, 238, 238)
+@layer base {
+  body {
+    background-color: rgb(37, 37, 37);
+    color: rgb(238, 238, 238)
+  }
+}
+
+@layer components {
+  .util-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -4,7 +4,13 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
+  host: {
+    class: `
+      h-[100px]
+      border-b-2
+    `
+  }
 })
 export class HeaderComponent {
 
