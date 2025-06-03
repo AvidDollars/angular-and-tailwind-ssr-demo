@@ -26,8 +26,8 @@ function fn_exit_on_uncomitted_changes() {
 }
 
 function fn_deploy_changes() {
-  git checkout deployment
-  git merge main
+  git checkout main
+  git push
   git checkout deployment
   git merge main -m "merging changes to 'deployment' branch"
   git push
