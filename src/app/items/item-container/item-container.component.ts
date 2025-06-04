@@ -4,16 +4,19 @@ import { ItemsAvailableService } from '../items-available.service';
 import { AsyncPipe } from '@angular/common';
 import { map } from 'rxjs';
 import { Vehicle } from '../item/models';
+import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
+
 
 @Component({
   selector: 'app-item-container',
-  imports: [ItemComponent, AsyncPipe],
+  imports: [ItemComponent, AsyncPipe, LoadingSpinnerComponent],
   templateUrl: './item-container.component.html',
   styleUrl: './item-container.component.css',
   host: {
     class: `
+      relative
       h-[79vh]
-      grid grid-cols-4 gap-2
+      grid grid-cols-5 gap-2
       overflow-scroll
       p-2
     `

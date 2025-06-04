@@ -10,7 +10,7 @@ import { Vehicle } from './models';
     class: `
       h-[300px]
       bg-green-800
-      p-2 rounded-md
+      p-3 rounded-md
     `
   }
 })

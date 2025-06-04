@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { ResponseRaw, VehicleRaw } from './item/models';
-import { catchError, Observable, expand, EMPTY, reduce } from 'rxjs';
+import { catchError, Observable, expand, EMPTY, reduce, finalize } from 'rxjs';
 
 class ItemsAvailableInternal {
   #http = inject(HttpClient);
@@ -26,13 +26,19 @@ class ItemsAvailableInternal {
 })
 export class ItemsAvailableService extends ItemsAvailableInternal {
 
+  // status of items fetching from the API:
+  fetchingStatus = signal<"active" | "inactive" | "fetched" | "errored">("inactive");
+
   /**
    * Recursively fetches paginated API until '"next": null' is reached.
    */
   get fetchAllVehicles$(): Observable<VehicleRaw[]> {
+    this.fetchingStatus.set("active");
+
     return this.getRawResponse$(this.url).pipe(
       expand(response => (response.next) ? this.getRawResponse$(response.next!) : EMPTY),
       reduce((previous, current) => [...previous, ...current.results], [] as VehicleRaw[]),
+      finalize(() => this.fetchingStatus.set("fetched")),
     )
   }
 }
