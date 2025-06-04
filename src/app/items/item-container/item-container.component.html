@@ -1,3 +1,13 @@
-@for (vehicle of parsedVehicles$ | async; track $index) {
-  <app-item [vehicle]="vehicle"/>
+@let fetchingStatus = itemsService.fetchingStatus();
+@let vehicles = parsedVehicles$ | async;
+
+@if (fetchingStatus === "active") {
+  <!-- parent has relative position -->
+  <app-loading-spinner class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
+}
+
+@else if (fetchingStatus === "fetched") {
+  @for (vehicle of vehicles; track $index) {
+    <app-item [vehicle]="vehicle"/>
+  }
 }
