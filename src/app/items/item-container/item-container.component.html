@@ -1,5 +1,3 @@
-@let urls = itemsService.urlsToFetch();
-
-@for (url of urls; track $index) {
-  <app-item [url]=url />
+@for (vehicle of parsedVehicles$ | async; track $index) {
+  <app-item [vehicle]="vehicle"/>
 }

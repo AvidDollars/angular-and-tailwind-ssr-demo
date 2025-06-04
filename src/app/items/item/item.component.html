@@ -1,1 +1,6 @@
-<p>{{ url() || "kdě url?" }}</p>
+@let vehicle_ = vehicle();
+
+<p>name: {{ vehicle_.name }}</p>
+<p>cost: {{ vehicle_.costInCredits }}</p>
+<p>length: {{ vehicle_.length }}</p>
+<p>manufacturer: {{ vehicle_.manufacturer}}</p>
