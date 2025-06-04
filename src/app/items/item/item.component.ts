@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { Vehicle } from './models';
 
 @Component({
   selector: 'app-item',
@@ -14,5 +15,5 @@ import { Component, input } from '@angular/core';
   }
 })
 export class ItemComponent {
-  url = input.required<string>();
+  vehicle = input.required<Vehicle>();
 }

@@ -1,32 +1,20 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
-import { ResponseRaw } from './item/models';
-import { catchError, map, of } from 'rxjs';
-import { toSignal} from '@angular/core/rxjs-interop';
-
+import { inject, Injectable } from '@angular/core';
+import { ResponseRaw, VehicleRaw } from './item/models';
+import { catchError, Observable, expand, EMPTY, reduce } from 'rxjs';
 
 class ItemsAvailableInternal {
   #http = inject(HttpClient);
-  #url = "https://swapi.py4e.com/api/vehicles";
-  #vehicleCount$ = this.#http.get<ResponseRaw>(this.#url).pipe(
-    map(result => result.count),
-    catchError((error: HttpErrorResponse) => {
-      console.error("Error occured!");
-      console.error(error);
-      return of(-1);
-    })
-  );
+  protected url = "https://swapi.py4e.com/api/vehicles";
 
-  protected vehicleCount = toSignal(this.#vehicleCount$);
-
-  /**
-   * Constructs an array of URLs.
-   * Each URL represents one item.
-   * To be used for parallel fetching.
-   */
-  protected createUrls(vehicleCount: number): string[] {
-    return [...Array(vehicleCount).keys()]
-      .map(id => `https://swapi.py4e.com/api/vehicles/${id}/`);
+  protected getRawResponse$(url: string): Observable<ResponseRaw> {
+    return this.#http.get<ResponseRaw>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error(`Error furing fetching "${url}" occurred:`);
+        console.error(error);
+        return EMPTY;
+      })
+    );
   }
 }
 
@@ -38,6 +26,13 @@ class ItemsAvailableInternal {
 })
 export class ItemsAvailableService extends ItemsAvailableInternal {
 
-  urlsToFetch = computed(() => this.createUrls(this.vehicleCount() || -1)); // -1 -> error
-
+  /**
+   * Recursively fetches paginated API until '"next": null' is reached.
+   */
+  get fetchAllVehicles$(): Observable<VehicleRaw[]> {
+    return this.getRawResponse$(this.url).pipe(
+      expand(response => (response.next) ? this.getRawResponse$(response.next!) : EMPTY),
+      reduce((previous, current) => [...previous, ...current.results], [] as VehicleRaw[]),
+    )
+  }
 }
