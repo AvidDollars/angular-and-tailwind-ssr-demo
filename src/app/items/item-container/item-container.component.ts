@@ -13,7 +13,8 @@ import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.c
     class: `
       relative
       h-[79vh]
-      grid grid-cols-3 gap-2
+      grid gap-2
+      lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1
       overflow-scroll
       p-2
     `

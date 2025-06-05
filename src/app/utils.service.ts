@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UtilsService {
+
   /**
    * Simulates Pythons "range" function.
    *
@@ -16,7 +17,7 @@ export class UtilsService {
    *        <content>
    *    }
    */
-  *range(config: { start?: number, step?: number, stop: number }) {
+  *range(config: { start?: number, step?: number, stop: number }): Generator<number> {
     let { start, step, stop } = config;
     start = start ?? 0;
 

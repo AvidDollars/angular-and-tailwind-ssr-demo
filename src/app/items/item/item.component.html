@@ -4,48 +4,49 @@
 <h2 class="
   text-green-100
   row-start-1 col-span-6 place-self-center
-  text-2xl
+  text-2xl text-center mb-4 border-b-2
 ">{{ vehicle_.name }}</h2>
 
-<!-- LENGHT -->
-<p>length:</p>
-<p class="
-  row-start-2 col-start-4
-">{{ vehicle_.length }}</p>
+<!-- PARAMS -->
+<table>
+  <thead class="w-[500px] border-b-1">
+    <tr class="text-left">
+      <th class="w-1/2">parameter</th>
+      <th>value</th>
+    </tr>
+  </thead>
 
-<!-- MANUFACTURER -->
-<p class="
-  row-start-3
-">manufacturer:</p>
-<p class="
-  row-start-3 col-start-3 col-span-4 justify-self-end
-">{{ vehicle_.manufacturer}}</p>
+  <tbody class="border-b-1">
+    @for (param of vehicle_.paramRow(); track $index) {
+      <tr class="odd:bg-green-900 text-green-100">
+        <td>{{ param[0] }}</td>
+        <td>{{ param[1] }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
 
-<!-- COST -->
-<p class="
-  text-orange-300
-  row-start-6 col-start-1 col-span-3 self-end
-  text-2xl
+<!-- FOOTER -->
+<footer class="
+  flex justify-between mt-auto
 ">
-  {{ vehicle_.costInCredits }}
-  <span class="ml-1 text-sm">CZK</span>
-</p>
+  <div class="self-center">
+    <p class="
+    text-orange-300
+    text-2xl
+  ">
+      {{ vehicle_.costInCredits | currency }}
+    </p>
+  </div>
 
-<!-- ADD TO CART -->
-@let isInCart = itemIsInCart();
-<img
-  (click)="toggleShoppingCard()"
-  src="shopping-card.svg"
-  alt="shopping card"
-  class="
-    w-12 md:w-12 lg:w-12 hover:cursor-pointer mr-8
-    row-start-6 col-start-6 self-end translate-x-4/5
+  @let isInCart = itemIsInCart();
+  <img (click)="toggleShoppingCard()" src="shopping-card.svg" alt="shopping card" class="
+    w-12 md:w-12 lg:w-12 hover:cursor-pointer
     p-2 rounded-md border-1 transition
-  "
-  [class]="{
+  " [class]="{
     'bg-green-600': !isInCart,
     'bg-red-700': isInCart,
     'hover:bg-emerald-800': !isInCart,
     'hover:bg-red-600': isInCart,
-  }"
->
+  }">
+</footer>
