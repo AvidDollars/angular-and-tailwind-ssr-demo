@@ -49,7 +49,7 @@ export class Vehicle {
     return !isNaN(this.costInCredits) && !isNaN(this.length);
   }
 
-  trimIfLong(text: string, maxLength: number = 25) {
+  trimIfLong(text: string, maxLength: number = 20) {
     const length = text.length;
     return (length > maxLength) ? `${text.slice(0, maxLength - 3)}...` : text;
   }

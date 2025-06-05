@@ -1,7 +1,6 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Vehicle } from './models';
 import { ShoppingCartService } from '../../shopping-cart.service';
-import { UtilsService } from '../../utils.service';
 import { ItemsAvailableService } from '../items-available.service';
 import { CurrencyPipe } from '@angular/common';
 
@@ -19,14 +18,17 @@ import { CurrencyPipe } from '@angular/common';
     `
   }
 })
-export class ItemComponent {
+export class ItemComponent implements OnInit {
   vehicle = input.required<Vehicle>();
   shoppingCart = inject(ShoppingCartService);
-  range = inject(UtilsService).range;
   itemIsInCart = signal(false);
-
   rows = inject(ItemsAvailableService).paramCount;
-  grid_rows_count = `grid-rows-${this.rows + 1}`; // +1 -> includes header
+
+  ngOnInit(): void {
+    if (this.shoppingCart.isInCart(this.vehicle().name)) {
+      this.itemIsInCart.set(true);
+    }
+  }
 
   toggleShoppingCard() {
     const vehicle = this.vehicle()
