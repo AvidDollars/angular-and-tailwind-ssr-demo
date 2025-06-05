@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { ItemComponent } from "../item/item.component";
 import { ItemsAvailableService } from '../items-available.service';
-import { AsyncPipe } from '@angular/common';
 import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
 
 @Component({
   selector: 'app-item-container',
-  imports: [ItemComponent, AsyncPipe, LoadingSpinnerComponent],
+  imports: [ItemComponent, LoadingSpinnerComponent],
   templateUrl: './item-container.component.html',
   styleUrl: './item-container.component.css',
   host: {
