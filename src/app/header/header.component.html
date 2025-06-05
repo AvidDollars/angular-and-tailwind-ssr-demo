@@ -1,3 +1,5 @@
+@let distinctVehicles = shoppingCart.distinctItemsCount();
+
 <h1 class="
     flex items-center
     h-full
@@ -8,15 +10,17 @@
   ">star wars shop</h1>
 
 <!-- NUMBER OF ITEMS IN THE SHOPPING CARD -->
-<div class="
+<div
+  class="
     util-centered
     text-2xl
-    bg-red-500
     rounded-full h-8 w-8
     border-1
     translate-x-4/8 translate-y-4/8
     ml-auto
-">3</div>
+  "
+  [class]="{'bg-green-700': distinctVehicles === 0, 'bg-red-700': distinctVehicles > 0}"
+>{{ distinctVehicles }}</div>
 
 <!-- SHOPPING CARD (from: https://www.svgrepo.com/svg/477474/shopping-cart-17) -->
 <img

@@ -1,5 +1,5 @@
 @let fetchingStatus = itemsService.fetchingStatus();
-@let vehicles = parsedVehicles$ | async;
+@let vehicles = itemsService.allVehicles();
 
 @if (fetchingStatus === "active") {
   <!-- parent has relative position -->
