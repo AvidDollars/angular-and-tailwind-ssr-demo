@@ -86,7 +86,8 @@ export class ShoppingCartService extends ShoppintCartInternal {
   // Checks whether item is in the cart.
   isInCart(name: string): boolean {
     const vehicle = this.items().get(name);
+    const itemsCountIdx = 0;
     if (!vehicle) return false;
-    return vehicle[0] > 0;
+    return vehicle[itemsCountIdx] > 0;
   }
 }
