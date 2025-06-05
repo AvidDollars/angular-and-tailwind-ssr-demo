@@ -40,7 +40,12 @@
   class="
     w-12 md:w-12 lg:w-12 hover:cursor-pointer mr-8
     row-start-6 col-start-6 self-end translate-x-4/5
-    p-2 rounded-md border-1
+    p-2 rounded-md border-1 transition
   "
-  [class]="{'bg-green-600': !isInCart, 'bg-red-700': isInCart}"
+  [class]="{
+    'bg-green-600': !isInCart,
+    'bg-red-700': isInCart,
+    'hover:bg-emerald-800': !isInCart,
+    'hover:bg-red-600': isInCart,
+  }"
 >
