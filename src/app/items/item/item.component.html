@@ -1,6 +1,46 @@
 @let vehicle_ = vehicle();
 
-<p>name: {{ vehicle_.name }}</p>
-<p>cost: {{ vehicle_.costInCredits }}</p>
-<p>length: {{ vehicle_.length }}</p>
-<p>manufacturer: {{ vehicle_.manufacturer}}</p>
+<!-- NAME -->
+<h2 class="
+  text-green-100
+  row-start-1 col-span-6 place-self-center
+  text-2xl
+">{{ vehicle_.name }}</h2>
+
+<!-- LENGHT -->
+<p>length:</p>
+<p class="
+  row-start-2 col-start-4
+">{{ vehicle_.length }}</p>
+
+<!-- MANUFACTURER -->
+<p class="
+  row-start-3
+">manufacturer:</p>
+<p class="
+  row-start-3 col-start-3 col-span-4 justify-self-end
+">{{ vehicle_.manufacturer}}</p>
+
+<!-- COST -->
+<p class="
+  text-orange-300
+  row-start-6 col-start-1 col-span-3 self-end
+  text-2xl
+">
+  {{ vehicle_.costInCredits }}
+  <span class="ml-1 text-sm">CZK</span>
+</p>
+
+<!-- ADD TO CART -->
+@let isInCart = itemIsInCart();
+<img
+  (click)="toggleShoppingCard()"
+  src="shopping-card.svg"
+  alt="shopping card"
+  class="
+    w-12 md:w-12 lg:w-12 hover:cursor-pointer mr-8
+    row-start-6 col-start-6 self-end translate-x-4/5
+    p-2 rounded-md border-1
+  "
+  [class]="{'bg-green-600': !isInCart, 'bg-red-700': isInCart}"
+>
