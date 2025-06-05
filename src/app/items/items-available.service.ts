@@ -64,5 +64,6 @@ class ItemsAvailableInternal {
 export class ItemsAvailableService extends ItemsAvailableInternal {
 
   allVehicles = toSignal(this.parsedVehicles$);
+  paramCount = 2; // specifies number of rows for parameter specification
 
 }

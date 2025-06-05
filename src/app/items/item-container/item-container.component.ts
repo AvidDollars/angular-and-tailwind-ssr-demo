@@ -1,20 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { ItemComponent } from "../item/item.component";
 import { ItemsAvailableService } from '../items-available.service';
-import { AsyncPipe } from '@angular/common';
 import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
 
 @Component({
   selector: 'app-item-container',
-  imports: [ItemComponent, AsyncPipe, LoadingSpinnerComponent],
+  imports: [ItemComponent, LoadingSpinnerComponent],
   templateUrl: './item-container.component.html',
   styleUrl: './item-container.component.css',
   host: {
     class: `
       relative
       h-[79vh]
-      grid grid-cols-3 gap-2
+      grid gap-2
+      lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1
       overflow-scroll
       p-2
     `
