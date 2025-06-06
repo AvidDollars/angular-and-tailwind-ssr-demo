@@ -1,7 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 
-type Price = number;
+export type Price = number;
 type Count = number;
+type VehicleName = string;
+export type CartItems = [VehicleName, [Count, Price]];
 
 class ShoppintCartInternal {
 
@@ -73,14 +75,13 @@ export class ShoppingCartService extends ShoppintCartInternal {
     this.saveCart(cart); // saves current cart's state into localStorage
   }
 
-  // 1st yields cart content (filter: itemsCount > 0),
-  // then final price is yielded for the filtered items.
-  *finalResults() {
+  // Returns content of the cart.
+  finalResults(): [CartItems[], Price] {
     const items = [...this.items()].filter(([_name, [count, _price]]) => count > 0);
-    yield items;
-    yield items
+    const price = items
       .map(([_name, [count, price]]) => count * price)
       .reduce((prev, curr) => prev + curr, 0);
+    return [items, price];
   }
 
   // Checks whether item is in the cart.
