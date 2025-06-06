@@ -1,1 +1,5 @@
-<p>payment works!</p>
+<p>price: {{ price }}</p>
+
+@for (item of items; track item) {
+  <p>{{ item | json }}</p>
+}
