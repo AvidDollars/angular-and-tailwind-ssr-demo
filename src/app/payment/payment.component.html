@@ -1,31 +1,33 @@
 <!-- LIST OF ITEMS -->
 <table class="w-[90%] m-auto mt-4">
-  <thead class="border-b-1 text-left">
+  <thead class="border-b-1 text-left text-2xl">
     <tr class="">
       <th class="w-1/3">vehicle</th>
       <th class="w-1/3">price</th>
-      <th class="w-1/3 translate-x-[10px]">amount</th>
+      <th class="w-1/3">amount</th>
     </tr>
   </thead>
 
   <tbody class="border-b-1 bg-green-800">
-    @for (item of items; track $index) {
+    @for (item of cartItems(); track $index) {
       <tr class="odd:bg-green-900 text-green-100 h-[60px]">
         <td>{{ item[0] }}</td>
-        <td>{{ item[1][1] }}</td>
+        <td>{{ item[1][1] | currency }} </td>
 
         <td>
           <div class="flex">
             <img
+              (click)="changeCount(item, 'minus')"
               src="minus.svg"
               alt="shopping card"
-              class="w-[20px]"
+              class="w-[20px] hover:cursor-pointer"
             >
-            <span class="px-4">{{ item[1][0] }}</span>
+            <div class="px-4">{{ item[1][0] }}</div>
             <img
+              (click)="changeCount(item, 'plus')"
               src="plus.svg"
               alt="shopping card"
-              class="w-[20px]"
+              class="w-[20px] hover:cursor-pointer"
             >
           </div>
         </td>
@@ -38,5 +40,5 @@
 <!-- TOTAL COST -->
 <div class="flex w-[90%] m-auto mt-2 text-2xl">
   <p class="w-1/3 uppercase">total:</p>
-  <p>{{ price | currency }}</p>
+  <p>{{ totalPrice() | currency }}</p>
 </div>

@@ -30,7 +30,7 @@ export class ItemComponent implements OnInit {
 
   toggleShoppingCard() {
     const vehicle = this.vehicle()
-    this.shoppingCart.toggleItemCount(vehicle.name, vehicle.costInCredits);
+    this.shoppingCart.changeCount(vehicle.name, vehicle.costInCredits);
     this.itemIsInCart.update(value => !value);
   }
 }
