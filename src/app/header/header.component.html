@@ -1,4 +1,5 @@
 @let distinctVehicles = shoppingCart.distinctItemsCount();
+@let onPaymentUrl = paymentUrl$ | async;
 
 <h1 class="
     flex items-center
@@ -9,22 +10,35 @@
     lg:text-5xl
   ">star wars shop</h1>
 
-<!-- NUMBER OF ITEMS IN THE SHOPPING CARD -->
-<div
-  class="
-    util-centered
-    text-2xl
-    rounded-full h-8 w-8
-    border-1
-    translate-x-4/8 translate-y-4/8
-    ml-auto
-  "
-  [class]="{'bg-green-700': distinctVehicles === 0, 'bg-red-700': distinctVehicles > 0}"
->{{ distinctVehicles }}</div>
+@if (!onPaymentUrl) {
+  <!-- NUMBER OF ITEMS IN THE SHOPPING CARD -->
+  <div
+    class="
+      util-centered
+      text-2xl
+      rounded-full h-8 w-8
+      border-1
+      translate-x-4/8 translate-y-4/8
+      ml-auto
+    "
+    [class]="{'bg-green-700': distinctVehicles === 0, 'bg-red-700': distinctVehicles > 0}"
+  >{{ distinctVehicles }}</div>
 
-<!-- SHOPPING CARD (from: https://www.svgrepo.com/svg/477474/shopping-cart-17) -->
-<img
-  src="shopping-card.svg"
-  alt="shopping card"
-  class="w-10 md:w-14 lg:w-16 hover:cursor-pointer mr-8"
->
+  <!-- SHOPPING CART (from: https://www.svgrepo.com/svg/477474/shopping-cart-17) -->
+  <img
+    routerLink="payment"
+    src="shopping-card.svg"
+    alt="shopping card"
+    class="w-10 md:w-14 lg:w-16 hover:cursor-pointer mr-8"
+  >
+}
+
+@else {
+  <!-- ARROW LEFT (from: https://www.svgrepo.com/svg/535154/arrow-left-from-line) -->
+  <img
+    routerLink=""
+    src="arrow-left.svg"
+    alt="shopping card"
+    class="w-10 md:w-14 lg:w-16 hover:cursor-pointer mr-8 ml-auto"
+  >
+}

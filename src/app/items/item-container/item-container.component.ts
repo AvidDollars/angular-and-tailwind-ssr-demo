@@ -3,7 +3,6 @@ import { ItemComponent } from "../item/item.component";
 import { ItemsAvailableService } from '../items-available.service';
 import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
-
 @Component({
   selector: 'app-item-container',
   imports: [ItemComponent, LoadingSpinnerComponent],
