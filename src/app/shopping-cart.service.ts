@@ -75,7 +75,7 @@ export class ShoppingCartService extends ShoppintCartInternal {
   changeCount(
     vehicleName: string,
     vehiclePrice: number,
-    action: "toggle" | "plus" | "minus" = "toggle"
+    action: "toggle" | "plus" | "minus" | "delete"
   ) {
 
     this.items.update(cart => {
@@ -85,7 +85,9 @@ export class ShoppingCartService extends ShoppintCartInternal {
       let newCount;
       if (action === "toggle") newCount = (currentCount === 0) ? 1 : 0;
       else if (action === "plus") newCount = currentCount + 1;
-      else newCount = (currentCount === 0) ? 0 : currentCount - 1;
+      else if (action === "delete") newCount = 0;
+      else if (action === "minus") newCount = (currentCount === 0) ? 0 : currentCount - 1;
+      else newCount = currentCount; // redundant, but otherwise it won't compile
 
       cart.set(vehicleName, [newCount, price]);
       this.items.set(cart);

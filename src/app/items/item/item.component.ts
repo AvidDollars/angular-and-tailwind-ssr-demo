@@ -14,6 +14,8 @@ import { CurrencyPipe } from '@angular/common';
       bg-green-800
       p-3 rounded-md border-1
       flex flex-col
+      hover:cursor-pointer hover:bg-green-700
+      transition delay-100 hover:scale-105
     `
   }
 })
@@ -30,7 +32,7 @@ export class ItemComponent implements OnInit {
 
   toggleShoppingCard() {
     const vehicle = this.vehicle()
-    this.shoppingCart.changeCount(vehicle.name, vehicle.costInCredits);
+    this.shoppingCart.changeCount(vehicle.name, vehicle.costInCredits, "toggle");
     this.itemIsInCart.update(value => !value);
   }
 }

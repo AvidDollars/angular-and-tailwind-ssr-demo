@@ -10,7 +10,7 @@
 <!-- PARAMS -->
 <table>
   <thead class="w-[500px] border-b-1">
-    <tr class="text-left">
+    <tr class="text-left text-amber-200">
       <th class="w-1/2">parameter</th>
       <th>value</th>
     </tr>
@@ -18,10 +18,10 @@
 
   <tbody class="border-b-1">
     @for (param of vehicle_.paramRow(); track $index) {
-      <tr class="odd:bg-green-900 text-green-100">
-        <td>{{ param[0] }}</td>
-        <td>{{ param[1] }}</td>
-      </tr>
+    <tr class="odd:bg-green-900 text-green-100">
+      <td class="pl-1">{{ param[0] }}</td>
+      <td class="pl-1">{{ param[1] }}</td>
+    </tr>
     }
   </tbody>
 </table>
@@ -32,7 +32,7 @@
 ">
   <div class="self-center">
     <p class="
-    text-orange-300
+    text-amber-200
     text-2xl
   ">
       {{ vehicle_.costInCredits | currency }}
@@ -41,7 +41,7 @@
 
   @let isInCart = itemIsInCart();
   <img (click)="toggleShoppingCard()" src="shopping-card.svg" alt="shopping card" class="
-    w-12 md:w-12 lg:w-12 hover:cursor-pointer
+    w-12 md:w-12 lg:w-12 hover:cursor-pointer hover:scale-110
     p-2 rounded-md border-1 transition
   " [class]="{
     'bg-green-600': !isInCart,
