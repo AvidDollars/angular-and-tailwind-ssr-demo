@@ -1,8 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 
 export type Price = number;
-type Count = number;
-type VehicleName = string;
+export type Count = number;
+export type VehicleName = string;
 export type CartItems = [VehicleName, [Count, Price]];
 
 class ShoppintCartInternal {
