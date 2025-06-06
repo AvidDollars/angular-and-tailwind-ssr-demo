@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { CartItems, ShoppingCartService } from '../shopping-cart.service';
-import { JsonPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-payment',
-  imports: [JsonPipe],
+  imports: [CurrencyPipe],
   templateUrl: './payment.component.html',
   styles: ``
 })

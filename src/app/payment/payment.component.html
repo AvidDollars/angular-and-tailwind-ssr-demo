@@ -1,5 +1,42 @@
-<p>price: {{ price }}</p>
+<!-- LIST OF ITEMS -->
+<table class="w-[90%] m-auto mt-4">
+  <thead class="border-b-1 text-left">
+    <tr class="">
+      <th class="w-1/3">vehicle</th>
+      <th class="w-1/3">price</th>
+      <th class="w-1/3 translate-x-[10px]">amount</th>
+    </tr>
+  </thead>
 
-@for (item of items; track item) {
-  <p>{{ item | json }}</p>
-}
+  <tbody class="border-b-1 bg-green-800">
+    @for (item of items; track $index) {
+      <tr class="odd:bg-green-900 text-green-100 h-[60px]">
+        <td>{{ item[0] }}</td>
+        <td>{{ item[1][1] }}</td>
+
+        <td>
+          <div class="flex">
+            <img
+              src="minus.svg"
+              alt="shopping card"
+              class="w-[20px]"
+            >
+            <span class="px-4">{{ item[1][0] }}</span>
+            <img
+              src="plus.svg"
+              alt="shopping card"
+              class="w-[20px]"
+            >
+          </div>
+        </td>
+
+      </tr>
+    }
+  </tbody>
+</table>
+
+<!-- TOTAL COST -->
+<div class="flex w-[90%] m-auto mt-2 text-2xl">
+  <p class="w-1/3 uppercase">total:</p>
+  <p>{{ price | currency }}</p>
+</div>
