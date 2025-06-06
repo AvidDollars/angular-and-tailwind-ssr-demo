@@ -1,18 +1,14 @@
 @let fetchingStatus = itemsService.fetchingStatus();
 @let vehicles = itemsService.allVehicles();
 
-<!-- parent has relative position -->
-@let centeredContentCSS = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2";
-
 @if (fetchingStatus === "active") {
-  <app-loading-spinner [class]="centeredContentCSS" />
+  <app-loading-spinner class="util-absolute-center" />
 }
 
 @else if (itemsService.errored) {
   <p
-    class="text-red-500 text-5xl"
-    [class]="centeredContentCSS"
-  >somehting went wrong...</p>
+    class="text-red-500 text-5xl util-absolute-center"
+  >something went wrong...</p>
 }
 
 @else if (fetchingStatus === "fetched") {
