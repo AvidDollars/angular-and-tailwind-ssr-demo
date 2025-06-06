@@ -1,14 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 export type Price = number;
 export type Count = number;
 export type VehicleName = string;
-export type CartItems = [VehicleName, [Count, Price]];
+export type CartItem = [VehicleName, [Count, Price]];
 
 class ShoppintCartInternal {
 
-  // "computed" couldn't be used since "#items" is a reference
-  distinctItemsCount = signal(0); // count number of distinct vehicles
   protected items = signal(new Map<string, [Count, Price]>());
   protected localStorageKey = "sw-shop-cart";
 
@@ -34,20 +32,12 @@ class ShoppintCartInternal {
     try {
       const parsedCart: Array<[string, [Count, Price]]> = JSON.parse(cartString);
       this.items.set(new Map(parsedCart));
-      this.distinctItemsCount.set(this.countDistinctItems());
     }
 
     catch (error) {
       console.error("Cannot parse cart object:");
       console.error(error);
     }
-  }
-
-  // Counts number of disctinct items stored in the cart.
-  protected countDistinctItems(): number {
-    return [...this.items().values()]
-      .filter(val => val[0] > 0)
-      .reduce((prev, _curr) => prev + 1, 0);
   }
 }
 
@@ -59,29 +49,49 @@ class ShoppintCartInternal {
 })
 export class ShoppingCartService extends ShoppintCartInternal {
 
-  /**
-   * If an item present in cart -> new_count = 0.
-   * If an item not present in cart -> new_count = 1.
-   */
-  toggleItemCount(vehicleName: string, vehiclePrice: number) {
-    const cart = this.items();
-    const [currentCount, price] = cart.get(vehicleName) ?? [0, vehiclePrice];
-    const newCount = (currentCount === 0) ? 1 : 0;
+  // counts number of distinct vehicles in the cart
+  distinctItemsCount = computed(() => {
+    return [...this.items().values()]
+      .filter(val => val[0] > 0)
+      .reduce((prev, _curr) => prev + 1, 0);
+  });
 
-    cart.set(vehicleName, [newCount, price]);
-    this.items.set(cart);
+  // returns vehicles where condition "count > 0" is truthy
+  cartItems = computed<CartItem[]>(() =>
+    [...this.items()].filter(([_name, [count, _price]]) => count > 0)
+  );
 
-    this.distinctItemsCount.set(this.countDistinctItems());
-    this.saveCart(cart); // saves current cart's state into localStorage
-  }
-
-  // Returns content of the cart.
-  finalResults(): [CartItems[], Price] {
-    const items = [...this.items()].filter(([_name, [count, _price]]) => count > 0);
-    const price = items
+  // total price of all vehicles in the cart
+  totalPrice = computed(() =>
+    this.cartItems()
       .map(([_name, [count, price]]) => count * price)
-      .reduce((prev, curr) => prev + curr, 0);
-    return [items, price];
+      .reduce((prev, curr) => prev + curr, 0)
+  )
+
+  /**
+   * It changes number of item count in the cart based on picked action.
+   * Default action: "toggle"
+   */
+  changeCount(
+    vehicleName: string,
+    vehiclePrice: number,
+    action: "toggle" | "plus" | "minus" = "toggle"
+  ) {
+
+    this.items.update(cart => {
+      const [currentCount, price] = cart.get(vehicleName) ?? [0, vehiclePrice];
+
+      // setting new count
+      let newCount;
+      if (action === "toggle") newCount = (currentCount === 0) ? 1 : 0;
+      else if (action === "plus") newCount = currentCount + 1;
+      else newCount = (currentCount === 0) ? 0 : currentCount - 1;
+
+      cart.set(vehicleName, [newCount, price]);
+      this.items.set(cart);
+      this.saveCart(cart); // saves current cart's state into localStorage
+      return new Map([...cart.entries()]);
+    });
   }
 
   // Checks whether item is in the cart.

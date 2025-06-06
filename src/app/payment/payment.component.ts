@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CartItems, ShoppingCartService } from '../shopping-cart.service';
+import { CartItem, ShoppingCartService } from '../shopping-cart.service';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -9,13 +9,11 @@ import { CurrencyPipe } from '@angular/common';
   styles: ``
 })
 export class PaymentComponent {
-  #cartContent = inject(ShoppingCartService).finalResults();
-  items!: CartItems[];
-  price!: number;
+  #cart = inject(ShoppingCartService);
+  cartItems = this.#cart.cartItems;
+  totalPrice = this.#cart.totalPrice;
 
-  ngOnInit() {
-    const [items, price] = this.#cartContent;
-    this.items = items;
-    this.price = price;
+  changeCount(item: CartItem, action: "minus" | "plus") {
+    this.#cart.changeCount(item[0], item[1][1], action);
   }
 }
