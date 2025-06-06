@@ -1,14 +1,13 @@
 import { ItemContainerComponent } from './items/item-container/item-container.component';
 import { Routes } from '@angular/router';
-import { PaymentComponent } from './payment/payment.component';
 
 export const routes: Routes = [
   {
     path: "",
     component: ItemContainerComponent,
   },
-  {
+  { // lazy loading
     path: "payment",
-    component: PaymentComponent,
+    loadComponent: () => import('./payment/payment.component').then(module => module.PaymentComponent),
   }
 ];
