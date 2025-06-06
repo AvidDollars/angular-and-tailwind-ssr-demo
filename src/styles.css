@@ -13,4 +13,12 @@
     align-items: center;
     justify-content: center;
   }
+
+  /* parent must have relative position */
+  .util-absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50%;
+  }
 }

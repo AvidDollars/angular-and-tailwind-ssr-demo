@@ -10,7 +10,8 @@ class ItemsAvailableInternal {
   protected url = "https://swapi.py4e.com/api/vehicles";
 
   // status of items fetching from the API:
-  fetchingStatus = signal<"active" | "inactive" | "fetched" | "errored">("inactive");
+  fetchingStatus = signal<"active" | "inactive" | "fetched">("inactive");
+  errored = false;
 
   /**
    * Fetches single page of vehicles.
@@ -20,6 +21,7 @@ class ItemsAvailableInternal {
       catchError((error: HttpErrorResponse) => {
         console.error(`Error furing fetching "${url}" occurred:`);
         console.error(error);
+        this.errored = true;
         return EMPTY;
       })
     );
@@ -62,8 +64,5 @@ class ItemsAvailableInternal {
   providedIn: 'root'
 })
 export class ItemsAvailableService extends ItemsAvailableInternal {
-
   allVehicles = toSignal(this.parsedVehicles$);
-  paramCount = 2; // specifies number of rows for parameter specification
-
 }

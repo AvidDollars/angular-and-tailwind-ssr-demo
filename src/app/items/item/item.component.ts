@@ -1,7 +1,6 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Vehicle } from './models';
 import { ShoppingCartService } from '../../shopping-cart.service';
-import { ItemsAvailableService } from '../items-available.service';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
@@ -22,7 +21,6 @@ export class ItemComponent implements OnInit {
   vehicle = input.required<Vehicle>();
   shoppingCart = inject(ShoppingCartService);
   itemIsInCart = signal(false);
-  rows = inject(ItemsAvailableService).paramCount;
 
   ngOnInit(): void {
     if (this.shoppingCart.isInCart(this.vehicle().name)) {

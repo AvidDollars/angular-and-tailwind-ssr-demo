@@ -2,8 +2,13 @@
 @let vehicles = itemsService.allVehicles();
 
 @if (fetchingStatus === "active") {
-  <!-- parent has relative position -->
-  <app-loading-spinner class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
+  <app-loading-spinner class="util-absolute-center" />
+}
+
+@else if (itemsService.errored) {
+  <p
+    class="text-red-500 text-5xl util-absolute-center"
+  >something went wrong...</p>
 }
 
 @else if (fetchingStatus === "fetched") {
