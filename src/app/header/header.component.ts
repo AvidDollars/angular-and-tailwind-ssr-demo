@@ -8,11 +8,13 @@ import { AsyncPipe } from '@angular/common';
   selector: 'app-header',
   imports: [RouterLink, AsyncPipe],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styles: '',
   host: {
     class: `
+      flex
       h-[100px]
-      border-b-2   `
+      border-b-2
+      `
   }
 })
 export class HeaderComponent {

@@ -7,7 +7,7 @@ import { CurrencyPipe } from '@angular/common';
   selector: 'app-item',
   imports: [CurrencyPipe],
   templateUrl: './item.component.html',
-  styleUrl: './item.component.css',
+  styles: '',
   host: {
     class: `
       h-[300px]
