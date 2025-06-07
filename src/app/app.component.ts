@@ -12,7 +12,7 @@ import { HeaderComponent } from "./header/header.component";
   styleUrl: './app.component.css',
   host: {
     class: `
-      m-auto mt-8 rounded-lg border-2 h-[90vh]
+      m-auto mt-8 rounded-lg border-2 mb-4
       max-w-[1200px]
       sm:w-[100vw]
       md:w-[80vw]

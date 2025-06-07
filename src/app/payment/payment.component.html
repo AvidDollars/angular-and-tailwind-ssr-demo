@@ -1,3 +1,4 @@
+@if (itemsCount() > 0) {
 <!-- LIST OF ITEMS -->
 <table class="w-[90%] m-auto mt-4">
 
@@ -38,3 +39,33 @@
   <p class="w-1/4 uppercase">total:</p>
   <p>{{ totalPrice() | currency }}</p>
 </div>
+
+<form [formGroup]="orderForm" class="
+      mt-8 rounded-lg
+      border-1
+      bg-green-800
+      w-[90%] m-auto
+      h-[500px]
+      relative
+      mb-4
+  ">
+  <div class="
+    inputs flex flex-col w-[90%] m-auto pt-4
+    [&>input]:m-2 [&>input]:p-2 [&>input]:border-1
+    [&>input]:rounded-lg [&>input]:bg-green-700
+  ">
+    <input type="text" name="name" id="name" formControlName="name" placeholder="full name" class="">
+    <input type="text" name="street" id="street" formControlName="street" placeholder="street" class="">
+    <input type="text" name="city" id="city" formControlName="city" placeholder="city" class="">
+    <input type="text" name="postal_code" id="postal_code" formControlName="postal_code" placeholder="postal_code" class="">
+    <input type="text" name="email" id="email" formControlName="email" placeholder="email" class="">
+    <input type="text" name="phone" id="phone" formControlName="phone" placeholder="phone" class="">
+  </div>
+
+  <button class="
+      absolute bottom-0 left-1/2 -translate-x-1/2
+      text-2xl bg-green-900 px-4 py-2 mb-4 border-1 rounded-xl
+      hover:bg-green-700 transition hover:cursor-pointer
+    ">create order</button>
+</form>
+}

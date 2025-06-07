@@ -7,7 +7,7 @@ import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.c
   selector: 'app-item-container',
   imports: [ItemComponent, LoadingSpinnerComponent],
   templateUrl: './item-container.component.html',
-  styleUrl: './item-container.component.css',
+  styles: '',
   host: {
     class: `
       relative
