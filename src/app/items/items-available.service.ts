@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { ResponseRaw, VehicleRaw } from './item/models';
-import { catchError, Observable, expand, EMPTY, reduce, finalize, map } from 'rxjs';
+import { catchError, Observable, expand, EMPTY, reduce, finalize, map, retry } from 'rxjs';
 import { Vehicle } from './item/models';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -18,6 +18,7 @@ class ItemsAvailableInternal {
    */
   protected getRawResponse$(url: string): Observable<ResponseRaw> {
     return this.#http.get<ResponseRaw>(url).pipe(
+      retry(2),
       catchError((error: HttpErrorResponse) => {
         console.error(`Error furing fetching "${url}" occurred:`);
         console.error(error);
