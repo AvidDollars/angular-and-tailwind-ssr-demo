@@ -12,11 +12,11 @@ import { HeaderComponent } from "./header/header.component";
   styleUrl: './app.component.css',
   host: {
     class: `
-      m-auto mt-8 rounded-lg border-2 mb-4
+      m-auto rounded-lg mb-4
       max-w-[1200px]
       sm:w-[100vw]
-      md:w-[80vw]
-      lg:w-[70vw]
+      md:w-[80vw] md:mt-4 md:border-2
+      lg:w-[70vw] md:mt-8 md:border-2
     `
   }
 })
