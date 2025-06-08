@@ -8,6 +8,6 @@ export const routes: Routes = [
   },
   { // lazy loading
     path: "payment",
-    loadComponent: () => import('./payment/payment.component').then(module => module.PaymentComponent),
+    loadComponent: () => import('./order/order').then(module => module.PaymentComponent),
   }
 ];

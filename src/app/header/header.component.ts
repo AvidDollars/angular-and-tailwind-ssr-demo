@@ -26,4 +26,10 @@ export class HeaderComponent {
     filter(event => event instanceof NavigationStart),
     map(event => event.url === "/payment" ? true : false),
   )
+
+  clearCartIfOrderSubmitted() {
+    if (this.shoppingCart.orderFormStatus() === "submitted") {
+      this.shoppingCart.clearCart();
+    }
+  }
 }

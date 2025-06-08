@@ -22,3 +22,8 @@
     translate: -50%;
   }
 }
+
+input.ng-invalid.ng-touched,
+[formgroupname].ng-invalid.ng-touched input {
+  background-color: rgb(172, 59, 59);
+}

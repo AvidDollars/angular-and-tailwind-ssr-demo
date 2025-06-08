@@ -26,6 +26,14 @@ class ShoppintCartInternal {
    * Attempts to load cart's content from localStorage.
    */
   protected tryLoadCart(): void {
+    // clear content from localStorage if order was submitted
+    const orderStatus = localStorage.getItem("order-status");
+    if (orderStatus === "submitted") {
+      localStorage.removeItem("order-status");
+      localStorage.removeItem(this.localStorageKey);
+      return;
+    }
+
     const cartString = localStorage.getItem(this.localStorageKey);
     if (cartString == null) return;
 
@@ -48,6 +56,8 @@ class ShoppintCartInternal {
   providedIn: 'root'
 })
 export class ShoppingCartService extends ShoppintCartInternal {
+
+  orderFormStatus = signal<"initial" | "invalid" | "submitting" | "submitted">("initial");
 
   // counts number of distinct vehicles in the cart
   distinctItemsCount = computed(() => {
@@ -102,5 +112,10 @@ export class ShoppingCartService extends ShoppintCartInternal {
     const itemsCountIdx = 0;
     if (!vehicle) return false;
     return vehicle[itemsCountIdx] > 0;
+  }
+
+  clearCart() {
+    this.items.set(new Map());
+    this.orderFormStatus.set("initial");
   }
 }
