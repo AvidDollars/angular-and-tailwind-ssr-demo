@@ -1,0 +1,143 @@
+@let itemsCount_ = itemsCount();
+
+@if (itemsCount_ > 0) {
+<!-- LIST OF ITEMS -->
+<table class="w-[90%] m-auto mt-4">
+
+  <thead class="border-b-1 text-left text-2xl">
+    <tr class="text-amber-200">
+      <th class="w-1/4">vehicle</th>
+      <th class="w-1/4">price</th>
+      <th class="w-1/4">amount</th>
+    </tr>
+  </thead>
+
+  <tbody class="border-b-1 bg-green-800 relative">
+    @for (item of cartItems(); track $index) {
+    <tr class="odd:bg-green-900 [&>td]:pr-4">
+      <td class="pl-1">{{ item[0] }}</td>
+      <td>{{ item[1][1] | currency:'CZK':'symbol-narrow' }}</td>
+
+      <td>
+        <div class="flex">
+          <img (click)="changeCount(item, 'minus')" src="minus.svg" alt="decrement item from shopping cart"
+            class="w-[20px] hover:cursor-pointer transition hover:scale-120">
+          <div class="px-4 text-amber-200">{{ item[1][0] }}</div>
+          <img (click)="changeCount(item, 'plus')" src="plus.svg" alt="add plus one item to shopping cart"
+            class="w-[20px] hover:cursor-pointer transition hover:scale-120">
+        </div>
+      </td>
+      <td (click)="changeCount(item, 'delete')" class="hover:cursor-pointer">
+        <img routerLink="payment" src="bin.svg" alt="delete from shopping cart"
+          class="w-8 md:w-8 lg:w-10 hover:cursor-pointer ml-auto mr-1 transition hover:scale-120">
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
+
+<!-- TOTAL COST -->
+@if (formStatus() !== "submitted") {
+<div class="flex w-[90%] m-auto mt-2 text-2xl text-amber-200">
+  <p class="w-1/4 uppercase">TOTAL:</p>
+  <p>{{ totalPrice() | currency:"CZK":"symbol-narrow" }}<span class="ml-2 text-sm">(incl. {{ tax * 100 }}% tax)</span>
+  </p>
+</div>
+}
+}
+
+<!-- IF CART IS EMPTY -->
+@else {
+<p class="text-center text-3xl p-4">Cart is empty</p>
+}
+
+<!-- UNSUBMITTED FORM -->
+@if (formStatus() !== "submitted") {
+<form [formGroup]="orderForm" class="
+      mt-8 rounded-lg
+      border-1
+      bg-green-800
+      w-[90%] m-auto
+      h-[500px]
+      relative
+      mb-4
+  ">
+  <div class="
+    inputs flex flex-col w-[90%] m-auto pt-4
+    [&>input]:m-2 [&>input]:p-2 [&>input]:border-1
+    [&>input]:rounded-lg [&>input]:bg-green-700
+    [&>input::placeholder]:text-green-200
+  ">
+    <input type="text" name="name" id="name" formControlName="name" placeholder="full name">
+    <input type="text" name="street" id="street" formControlName="street" placeholder="street">
+    <input type="text" name="city" id="city" formControlName="city" placeholder="city">
+    <input type="text" name="postal_code" id="postal_code" formControlName="postal_code" placeholder="postal code">
+    <input type="text" name="email" id="email" formControlName="email" placeholder="email">
+    <input type="text" name="phone" id="phone" formControlName="phone" placeholder="phone">
+  </div>
+
+  @if (formStatus() !== 'submitting') {
+  <button class="
+    absolute bottom-0 left-1/2 -translate-x-1/2
+    text-2xl px-4 py-2 mb-4 border-1 rounded-xl
+    hover:cursor-pointer bg-green-900
+    min-w-[300px]
+    " [disabled]="itemsCount_ === 0" [class]="{
+      'bg-red-700': formStatus() === 'invalid',
+      'hover:bg-green-700': formStatus() !== 'invalid',
+      'disabled:bg-gray-300': itemsCount_ === 0,
+      'disabled:cursor-not-allowed': itemsCount_ === 0,
+    }" (click)="submitForm()">{{ formText() }}
+  </button>
+  }
+
+  @else {
+  <app-loading-spinner text="submitting" class="
+      absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/4
+    " />
+  }
+
+</form>
+}
+
+<!-- FORM WAS SUBMITTED: SHOW RECAP -->
+@else {
+<div class="w-[90%] rounded-lg m-auto mt-4 mb-4 bg-green-800 h-[500px] relative">
+  <h2 class="text-center text-4xl uppercase p-4 text-amber-200">summary</h2>
+
+  <div class="flex flex-col pl-4 [&>*]:pb-4">
+    <!-- TOTAL PRICE -->
+    <div>
+      <p class="row-start-2 text-2xl text-amber-200">total price:</p>
+      <p class="row-start-2 col-start-2">{{ totalPrice() | currency:"CZK":"symbol-narrow" }}</p>
+    </div>
+
+    <!-- PRICE WITHOUT TAX -->
+    <div>
+      <p class="row-start-3 text-2xl text-amber-200">price without tax:</p>
+      <p class="row-start-3 col-start-2">{{ noTaxPrice() | currency:"CZK":"symbol-narrow" }}</p>
+    </div>
+
+    <div>
+      <p class="row-start-3 text-2xl text-amber-200">price in other currencies:</p>
+      <div class="flex">
+        <select [(ngModel)]="selectedCurrency" class="border-1 w-[150px]">
+          <option value="undefined" disabled selected>-- SHOW IN OTHER CURRENCY --</option>
+
+          @for (currency of (allCurrencies$ | async); track currency) {
+          <option [value]="currency">{{ currency }}</option>
+          }
+        </select>
+        <p class="ml-2">{{ valueInSelectedCurrency$ | async | currency:selectedCurrency() }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="absolute bottom-1/8 left-1/2 -translate-x-1/2 text-center border-b-1 border-t-1 py-2">
+    <p>We are currently processing your order.</p>
+    <p>You will be notified on your email when order status changes.</p>
+  </div>
+
+</div>
+}
