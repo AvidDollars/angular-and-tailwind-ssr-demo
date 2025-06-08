@@ -36,6 +36,7 @@
 @else {
   <!-- ARROW LEFT (from: https://www.svgrepo.com/svg/535154/arrow-left-from-line) -->
   <img
+    (click)="clearCartIfOrderSubmitted()"
     routerLink=""
     src="arrow-left.svg"
     alt="shopping card"
