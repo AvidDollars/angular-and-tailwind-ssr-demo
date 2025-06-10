@@ -27,3 +27,8 @@ input.ng-invalid.ng-touched,
 [formgroupname].ng-invalid.ng-touched input {
   background-color: rgb(172, 59, 59);
 }
+
+input.ng-valid.ng-touched,
+[formgroupname].ng-valid.ng-touched input {
+  border: 1px solid rgb(107, 189, 103);
+}
