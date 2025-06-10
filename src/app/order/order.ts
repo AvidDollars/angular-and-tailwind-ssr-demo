@@ -45,14 +45,15 @@ export class PaymentComponent implements OnDestroy {
     city: new FormControl("", [Validators.required]),
     postal_code: new FormControl("", [
       Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(6),
-      Validators.pattern("[0-9]*"),
+      Validators.pattern("^[0-9]{5}$"),
     ]),
-    email: new FormControl("", [Validators.required, Validators.email]),
+    email: new FormControl("", [
+      Validators.required,
+      Validators.pattern("^([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)$")
+    ]),
     phone: new FormControl("", [
       Validators.required,
-      Validators.pattern("^[- +()0-9]+$"),
+      Validators.pattern("^[0-9]{9}$"),
     ]),
   })
 

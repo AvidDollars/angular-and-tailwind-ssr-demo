@@ -72,7 +72,7 @@
     <input type="text" name="street" id="street" formControlName="street" placeholder="street">
     <input type="text" name="city" id="city" formControlName="city" placeholder="city">
     <input type="text" name="postal_code" id="postal_code" formControlName="postal_code" placeholder="postal code">
-    <input type="text" name="email" id="email" formControlName="email" placeholder="email">
+    <input type="email" name="email" id="email" formControlName="email" placeholder="email">
     <input type="text" name="phone" id="phone" formControlName="phone" placeholder="phone">
   </div>
 
@@ -114,7 +114,7 @@
 
     <!-- PRICE WITHOUT TAX -->
     <div>
-      <p class="row-start-3 text-2xl text-amber-200">price without tax:</p>
+      <p class="row-start-3 text-2xl text-amber-200">price without 21% tax</p>
       <p class="row-start-3 col-start-2">{{ noTaxPrice() | currency:"CZK":"symbol-narrow" }}</p>
     </div>
 
