@@ -1,5 +1,5 @@
 # Link to the demo
-accessible here: [https://aviddollars.github.io/form_demo/](https://aviddollars.github.io/form_demo/)
+accessible here: [https://aviddollars.github.io/angular-and-tailwind-ssr-demo/](https://aviddollars.github.io/angular-and-tailwind-ssr-demo/)
 
 ## Technologies used
 - Angular v19
